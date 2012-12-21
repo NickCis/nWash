@@ -56,18 +56,22 @@ class nWash():
                 self.com[config[i]['command']] = i
 
     def loadPluginDefinition(self, plugin):
+        '''Load a plugin'''
         plugDef = plugins.getDefinition(plugin)
         if plugDef:
             self.loadConfig([plugDef], False)
 
     def loadPluginsDefinitions(self, plugins):
+        '''Load a list of plugins'''
         for i in plugins:
             self.loadPluginDefinition(i)
 
     def loadAllPluginsDefinitions(self):
+        '''Load all plugins definitions in the plugin folder'''
         self.loadPluginsDefinitions(plugins.plugins)
 
     def loadRc(self, path='./nWashrc'):
+        '''Load configuration file, a file which has valid nWash command lines'''
         with open(path) as rc:
             for line in rc.readlines():
                 try:
@@ -319,10 +323,13 @@ if __name__ == '__main__':
     def cerrar(*args):
         return -1
 
+    #Create nWash instance
     nw = nWash()
+    #Register some callbacks
     nw.registerCallback('pepe', pepe)
     nw.registerCallback('pepeA', pepeA)
     nw.registerCallback('cerrar', cerrar)
+    #Load a config structure
     nw.loadConfig([
         {
             'command': 'pepe',
@@ -341,6 +348,8 @@ if __name__ == '__main__':
             'do': 'cerrar'
         }
     ])
+    #Load all plugins from plugin files. (Config structures of each plugin are
+    #merged to the loaded one.
     nw.loadAllPluginsDefinitions();
     try:
         nw.completionInit()

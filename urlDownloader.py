@@ -11,6 +11,7 @@ class UrlDownloader(urllib.request.OpenerDirector):
         self.add_handler(urllib.request.ProxyHandler())
         self.add_handler(urllib.request.UnknownHandler())
         self.add_handler(urllib.request.HTTPHandler())
+        self.add_handler(urllib.request.HTTPSHandler())
         self.add_handler(urllib.request.HTTPDefaultErrorHandler())
         self.add_handler(urllib.request.HTTPRedirectHandler())
         self.add_handler(urllib.request.FTPHandler())
