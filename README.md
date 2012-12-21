@@ -19,70 +19,70 @@ Basic structure of folders:
 Other files are optional.
 
 
-class nWash(builtins.object)
-     |
-     |  Methods defined here:
-     |
-     |  __init__(self)
-     |
-     |  command(self)
-     |
-     |  completionDo(self, text, state)
-     |
-     |  completionInit(self)
-     |      Inicialices the autocompletion
-     |
-     |  completionQuit(self)
-     |
-     |  extend(self, old, new=None)
-     |      Creates a copy of dict old and extends it with new.
-     |
-     |  extendList(self, old, new=None)
-     |      Creates a copy of list old and extends it with new
-     |
-     |  getOptions(self, args, text)
-     |
-     |  loadAllPluginsDefinitions(self)
-     |      Load all plugins definitions in the plugin folder
-     |
-     |  loadConfig(self, config, erase=True)
-     |      Load Configuration list. No check is done.
-     |
-     |  loadPluginDefinition(self, plugin)
-     |      Load a plugin
-     |
-     |  loadPluginsDefinitions(self, plugins)
-     |      Load a list of plugins
-     |
-     |  loadRc(self, path='./nWashrc')
-     |      Load configuration file, a file which has valid nWash command lines
-     |
-     |  parseArgs(self, args)
-     |      Parse line in args
-     |
-     |  registerCallback(self, name, func)
-     |      Register callbacks -> do function of the config file
-     |
-     |  registerCallbacks(self, config)
-     |      Register many callbacks
-     |
-     |  runCommand(self, *argscpy)
-     |      Run a command already parsed
-     |
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes defined here:
-     |
-     |  COMMAND_LINE = '=> '
-     |
-     |  DESCRIPTION = ' Bienvenido a nWash sistema de shell'
+    class nWash(builtins.object)
+         |
+         |  Methods defined here:
+         |
+         |  __init__(self)
+         |
+         |  command(self)
+         |
+         |  completionDo(self, text, state)
+         |
+         |  completionInit(self)
+         |      Inicialices the autocompletion
+         |
+         |  completionQuit(self)
+         |
+         |  extend(self, old, new=None)
+         |      Creates a copy of dict old and extends it with new.
+         |
+         |  extendList(self, old, new=None)
+         |      Creates a copy of list old and extends it with new
+         |
+         |  getOptions(self, args, text)
+         |
+         |  loadAllPluginsDefinitions(self)
+         |      Load all plugins definitions in the plugin folder
+         |
+         |  loadConfig(self, config, erase=True)
+         |      Load Configuration list. No check is done.
+         |
+         |  loadPluginDefinition(self, plugin)
+         |      Load a plugin
+         |
+         |  loadPluginsDefinitions(self, plugins)
+         |      Load a list of plugins
+         |
+         |  loadRc(self, path='./nWashrc')
+         |      Load configuration file, a file which has valid nWash command lines
+         |
+         |  parseArgs(self, args)
+         |      Parse line in args
+         |
+         |  registerCallback(self, name, func)
+         |      Register callbacks -> do function of the config file
+         |
+         |  registerCallbacks(self, config)
+         |      Register many callbacks
+         |
+         |  runCommand(self, *argscpy)
+         |      Run a command already parsed
+         |
+         |  ----------------------------------------------------------------------
+         |  Data and other attributes defined here:
+         |
+         |  COMMAND_LINE = '=> '
+         |
+         |  DESCRIPTION = ' Bienvenido a nWash sistema de shell'
 
 Config List (see \_\_definition\_\_ in plugin files):
-     |  Config Reserved words:
-     |  command -> the command keyword
-     |  child -> the command childs
-     |  data -> the command args
-     |  do -> the function to call
-     |  desc -> Command description (it is used to print in help)
+     *  Config Reserved words:
+     *  command -> the command keyword
+     *  child -> the command childs
+     *  data -> the command args
+     *  do -> the function to call
+     *  desc -> Command description (it is used to print in help)
 
 Example: 
 
