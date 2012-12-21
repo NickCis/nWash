@@ -1,0 +1,110 @@
+#! /usr/bin/python3
+
+import sys
+import json
+import os.path
+import traceback
+
+import nWash
+
+
+
+class Twsh(nWash.nWash):
+    COMMAND_LINE = "[3ws]$ "
+    version = '1.0.0'
+
+    def __init__(self, config='config.twsh'):
+        nWash.nWash.__init__(self)
+
+
+        self.historyList = []
+
+        self.registerCallback('exit', lambda *x: 1)
+        self.registerCallback('history', self.history)
+        self.registerCallback('!!', lambda *x: x[-1].runCommand(*x[-1].historyList[-2]))
+        self.registerCallback('help', self.help)
+
+        with open(config) as fh:
+            try:
+                self.loadConfig(json.load(fh))
+            except:
+                print("[Error] Leyendo archivo de configuracion")
+                traceback.print_exc()
+                exit()
+        self.loadAllPluginsDefinitions()
+        self.loadRc('./twshrc')
+
+    def history(self, *args):
+        for i in range(0, len(self.historyList)):
+            print("#%s" % i, end=' ')
+            print(*self.historyList[i])
+
+    def runCommand(self, *argscpy):
+        #TODO: history to file.
+        while len(self.historyList) >= 50:
+            self.historyList.pop(0)
+
+        self.historyList.append(argscpy)
+        return nWash.nWash.runCommand(self, *argscpy)
+
+    def help(self, data, extra, args, struct, config, twsh):
+        #print(extra)
+
+        scope = self.config
+        struct = {}
+
+        child = True
+        while len(extra)  and  child:
+            child = False
+            for it in scope:
+                if 'command' in it:
+                    if extra[0] == it['command']:
+                        print(extra.pop(0), end=' ')
+                        struct = self.extend(struct, it)
+                        if 'child' in it:
+                            scope = it['child']
+                            child = True
+                        break
+
+        if child:
+            print('')
+            for it in scope:
+                if 'command' in it:
+                    print("\t", it['command'])
+        else:
+            if 'data' in struct:
+                descText = ''
+                for it in struct['data']:
+                    if 'type' in it and not it['type'] == 'text':
+                        continue
+                    name = it['show'] if('show' in it)else it['name']
+                    print("<%s>" % name, end=' ')
+                    descText = "%s\n\t%s" % (
+                        descText,
+                        ("%s: %s" % (name, it['description']) ) if('description' in it)else it['name']
+                    )
+
+                print('\n', descText)
+            #TODO: soporte de descripcion
+            #elif 
+            else:
+                print('')
+
+
+if __name__ == '__main__':
+    twsh = Twsh()
+    twsh.completionInit()
+    print('Three Way Shell %s' % twsh.version)
+    print('Running on Python %s' % sys.version)
+    print('Type "help" for more information.')
+
+    errno = 0
+    while not errno:
+        try:
+            errno = twsh.command()
+        #except KeyboardInterrupt:
+        except EOFError:
+            print('')
+            exit()
+        except: #Agarramos todo
+            print("")

@@ -1,0 +1,30 @@
+[
+    {
+        "command": "exit",
+        "do": "exit"
+    },{
+        "command": "history",
+        "do": "history"
+    },{
+        "command": "mv",
+        "do": "mv",
+        "data": [
+            {
+                "name": "orig",
+                "type": "path",
+                "show": "Origen"
+            },
+            {
+                "name": "dst",
+                "type": "path",
+                "show": "Destino"
+            }
+        ]
+    },{
+        "command": "help",
+        "do": "help"
+    },{
+        "command": "!!",
+        "do": "!!"
+    }
+]
